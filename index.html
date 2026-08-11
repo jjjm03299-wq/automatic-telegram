@@ -4,8 +4,53 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hello World</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      color: #222;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 28px;
+      max-width: 420px;
+      width: 90%;
+      margin: 16px;
+      text-align: center;
+    }
+
+    .card h1 { margin: 0 0 8px; }
+
+    .card p { margin: 0 0 18px; color: #555; }
+
+    a.tool-link {
+      display: inline-block;
+      padding: 11px 18px;
+      background: #222;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    a.tool-link:hover { background: #444; }
+  </style>
 </head>
 <body>
-  <h1>Hello World</h1>
+  <div class="card">
+    <h1>Hello World</h1>
+    <p>A simple static site.</p>
+    <a class="tool-link" href="vpn-generator.html">OpenVPN Config Generator</a>
+  </div>
 </body>
 </html>
