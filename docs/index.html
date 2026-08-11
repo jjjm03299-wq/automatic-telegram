@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenAPI Documentation</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      color: #222;
+    }
+
+    header {
+      padding: 24px;
+      background: #222;
+      color: white;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .endpoint {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      padding: 20px;
+    }
+
+    .method {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 5px;
+      background: #198754;
+      color: white;
+      font-weight: bold;
+    }
+
+    pre {
+      background: #111;
+      color: #eee;
+      padding: 15px;
+      overflow: auto;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1 id="title"></h1>
+  <p id="description"></p>
+  <p id="version"></p>
+</header>
+
+<main id="docs"></main>
+
+<script>
+/*
+ * OpenAPI document
+ *
+ * No URL.
+ * No localhost.
+ * No external API.
+ */
+const openapi = {
+  openapi: "3.0.3",
+
+  info: {
+    title: "RAM API",
+    version: "1.0.0",
+    description: "Static OpenAPI documentation"
+  },
+
+  paths: {
+    "/api/get-ram.json": {
+      get: {
+        summary: "Get RAM information",
+
+        responses: {
+          "200": {
+            description: "RAM information",
+
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+
+                  properties: {
+                    ram_mb: {
+                      type: "integer",
+                      example: 1024
+                    }
+                  }
+                },
+
+                example: {
+                  ram_mb: 1024
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+
+/*
+ * Render documentation
+ */
+document.getElementById("title").textContent =
+  openapi.info.title;
+
+document.getElementById("description").textContent =
+  openapi.info.description;
+
+document.getElementById("version").textContent =
+  "OpenAPI " +
+  openapi.openapi +
+  " · Version " +
+  openapi.info.version;
+
+
+const docs = document.getElementById("docs");
+
+
+for (const [path, pathItem] of Object.entries(openapi.paths)) {
+
+  for (const [method, operation] of Object.entries(pathItem)) {
+
+    const endpoint = document.createElement("section");
+    endpoint.className = "endpoint";
+
+    const methodElement = document.createElement("span");
+    methodElement.className = "method";
+    methodElement.textContent = method.toUpperCase();
+
+    const pathElement = document.createElement("h2");
+    pathElement.textContent = path;
+
+    const summary = document.createElement("p");
+    summary.textContent =
+      operation.summary || "";
+
+    const responseTitle = document.createElement("h3");
+    responseTitle.textContent = "Response";
+
+    const response = document.createElement("pre");
+
+    response.textContent = JSON.stringify(
+      operation.responses["200"]
+        .content["application/json"]
+        .example,
+      null,
+      2
+    );
+
+    endpoint.append(
+      methodElement,
+      pathElement,
+      summary,
+      responseTitle,
+      response
+    );
+
+    docs.appendChild(endpoint);
+  }
+}
+</script>
+
+</body>
+</html>
